@@ -36,13 +36,13 @@ export function SignatureForm({
       noValidate
       onSubmit={handleSubmit}
       aria-labelledby="signature-form-title"
-      className="border-line flex flex-col gap-5 rounded-[10px] border bg-white p-7"
+      className="border-line flex flex-col gap-5 rounded-[10px] border bg-white p-5 sm:p-7"
     >
       <h2 id="signature-form-title" className="text-base font-bold">
         내 정보 입력
       </h2>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FormField label="한글 이름" inputId="name-ko" error={errors.ko}>
           <TextInput
             id="name-ko"
@@ -63,7 +63,7 @@ export function SignatureForm({
         </FormField>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <DepartmentField
           selection={form.departmentSelection}
           customDepartment={form.customDepartment}

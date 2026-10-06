@@ -33,7 +33,7 @@ export function GeneratedCodePanel({
     <section
       ref={panelRef}
       aria-labelledby="generated-code-title"
-      className="border-line flex scroll-mt-6 flex-col gap-[18px] rounded-[10px] border bg-white p-7"
+      className="border-line flex scroll-mt-6 flex-col gap-[18px] rounded-[10px] border bg-white p-5 sm:p-7"
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-col gap-1">

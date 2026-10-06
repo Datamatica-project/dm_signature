@@ -40,7 +40,7 @@ export function PreviewPanel({ previewDocument, formHeight }: PreviewPanelProps)
   return (
     <section
       aria-labelledby="preview-title"
-      className="border-line sticky top-6 flex min-h-0 flex-col gap-4 rounded-[10px] border bg-white px-5 pt-5 pb-6"
+      className="border-line flex min-h-0 flex-col gap-4 rounded-[10px] border bg-white px-5 pt-5 pb-6 xl:sticky xl:top-6"
       style={{ maxHeight: formHeight || undefined }}
     >
       <div ref={headerRef} className="flex flex-wrap items-center justify-between gap-3">
