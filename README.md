@@ -15,7 +15,7 @@
 - **휴대폰 번호 자동 표기**: `010-1234-5678`처럼 입력하면 서명에는 `+82 (0)10-1234-5678` 형식으로 들어갑니다.
 - **실시간 미리보기**: 입력할 때마다 데스크탑(860px)과 모바일(375px) 서명을 바로 보여줍니다. 데스크탑 미리보기를 누르면 원본 크기로 확인할 수 있습니다.
 - **서명 HTML 생성**: 생성된 코드를 복사하거나 `.html` 파일로 내려받을 수 있습니다. 생성한 뒤 입력값을 바꾸면 다시 생성하라고 알려줍니다.
-- **반응형 서명**: 하나의 HTML 안에 데스크탑용 서명과 모바일용 서명이 함께 들어 있고, 메일 클라이언트의 화면 폭에 따라 하나만 표시됩니다.
+- **어디서나 같은 서명**: 서명은 하나의 HTML이고, 가로형 로고 아래에 정보를 쌓는 한 열 구조라 PC와 모바일에서 같은 순서로 보입니다. 주소는 화면이 넓으면 라벨 옆에 한 줄로, 좁으면 라벨 아래에 2줄로 표시됩니다.
 
 웹사이트 주소, 본사/연구소 주소, 전북 사업장 주소, 로고는 고정값이라 사용자가 수정할 수 없습니다.
 
@@ -86,10 +86,12 @@ public/
 ## 서명 내용 수정하기
 
 - **부서 목록, 주소, 웹사이트, 서명 로고 URL**: `app/_signature-generator/constants.ts`
-- **서명 HTML 레이아웃**: `app/_signature-generator/lib/desktop-signature.ts`, `mobile-signature.ts`
+- **서명 HTML 레이아웃**: `app/_signature-generator/lib/signature-html.ts`(전체 배치), `signature-sections.ts`(이름·연락처·주소)
 - **입력 검증 규칙**: `app/_signature-generator/lib/validation.ts`
 
-서명 HTML은 메일 클라이언트 호환성을 위해 `table` 레이아웃과 inline style로 작성되어 있습니다. 서명에 들어가는 로고 이미지는 `https://www.datamatica.kr`에 올라가 있는 파일을 참조합니다.
+서명 HTML은 `<style>`과 `@media` 없이 `table` 레이아웃과 inline style만으로 작성되어 있습니다. 다우오피스 등에서 서명이 메일 본문 중간에 들어가면 `<style>`이 수신 화면에서 적용되지 않기 때문입니다. 주소의 라벨과 내용은 `display: inline-block`으로 두어 폭이 부족하면 내용이 라벨 아래로 내려갑니다. 주소는 Google 지도 링크로 감싸 Gmail 등의 자동 링크(파란 밑줄)를 막습니다. 서명의 로고는 이 프로젝트에 배포된 `https://dm-signature.vercel.app/signature/logo-horizontal.png`(`public/signature/logo-horizontal.png`)를 참조합니다.
+
+> **주의**: 이미 보낸 메일도 이 주소에서 로고를 불러옵니다. `public/signature/` 폴더의 파일은 지우거나 이름을 바꾸지 마세요. 로고를 교체할 때는 새 파일명으로 추가하고 `constants.ts`의 `logoUrl`을 바꿉니다.
 
 ## 개발 규칙
 

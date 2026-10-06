@@ -13,15 +13,17 @@ export const EMAIL_DOMAIN = 'datamatica.kr';
 export const COMPANY = {
   website: 'https://www.datamatica.kr',
   websiteLabel: 'www.datamatica.kr',
-  desktopLogoUrl: 'https://www.datamatica.kr/signature-logo.png',
-  mobileLogoUrl: 'https://www.datamatica.kr/signature-logo_horizontal.png',
+  // 이미 보낸 메일도 이 주소에서 로고를 불러오므로 public/signature/의 파일은 지우거나 이름을 바꾸지 않는다.
+  logoUrl: 'https://dm-signature.vercel.app/signature/logo-horizontal.png',
   headOffice: {
     label: '본사/연구소',
     lines: ['경기 성남시 분당구 판교로255번길 9-22', '우림 W-City 809-1호'],
+    mapQuery: '경기 성남시 분당구 판교로255번길 9-22',
   },
   jeonbukOffice: {
     label: '전북 사업장',
     lines: ['전북특별자치도 전주시 덕진구', '반룡로 111, 509호 (한국전자기술연구원)'],
+    mapQuery: '전북특별자치도 전주시 덕진구 반룡로 111',
   },
 } as const;
 

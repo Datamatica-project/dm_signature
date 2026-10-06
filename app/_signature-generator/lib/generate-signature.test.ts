@@ -20,8 +20,6 @@ describe('generateSignature', () => {
     const { html, summary, fileName } = result.signature;
     expect(summary).toBe('홍길동 · 솔루션개발본부 / 연구원');
     expect(fileName).toBe('메일서명_홍길동.html');
-    expect(html).toContain('<!-- DESKTOP SIGNATURE -->');
-    expect(html).toContain('<!-- MOBILE SIGNATURE -->');
     expect(html).toContain('href="tel:+821012345678"');
     expect(html).toContain('href="mailto:gildong@datamatica.kr"');
     expect(html).toContain('+82 (0)10-1234-5678');

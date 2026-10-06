@@ -1,19 +1,14 @@
 import type { SignatureValues } from '../types';
-import { buildDesktopSignature } from './desktop-signature';
 import { escapeHtml } from './html-escape';
-import { buildMobileSignature } from './mobile-signature';
-import type { EscapedSignatureFields } from './signature-template-parts';
+import { buildAddresses, buildContacts, buildIdentity, buildLogo } from './signature-sections';
+import { FONT_FAMILY, type EscapedSignatureFields } from './signature-template-parts';
 
-// 모바일 메일 앱은 media query로 두 서명 중 하나만 보여주고, Outlook은 mso-hide로 모바일 서명을 숨긴다.
-const RESPONSIVE_STYLE = `<style type="text/css">
-  .dm-signature-mobile { display: none; max-height: 0; overflow: hidden; mso-hide: all; }
-  @media only screen and (max-width: 600px) {
-    .dm-signature-desktop { display: none !important; max-height: 0 !important; overflow: hidden !important; mso-hide: all !important; }
-    .dm-signature-mobile { display: table !important; width: 100% !important; max-width: 360px !important; max-height: none !important; overflow: visible !important; }
-    .dm-mobile-email { word-break: break-all !important; }
-  }
-</style>`;
+const SIGNATURE_MAX_WIDTH = 600;
 
+/**
+ * 가로형 로고를 맨 위에 두고 그 아래에 정보를 쌓는 한 열 구조라 @media 없이 PC와 모바일에서 같은 순서로 보인다.
+ * 주소처럼 긴 줄만 폭이 부족할 때 줄바꿈되어 수신 화면에서도 넘치지 않는다.
+ */
 export function buildSignatureHtml(values: SignatureValues): string {
   const fields: EscapedSignatureFields = {
     ko: escapeHtml(values.ko),
@@ -24,13 +19,26 @@ export function buildSignatureHtml(values: SignatureValues): string {
     email: escapeHtml(values.email),
   };
 
-  return `${RESPONSIVE_STYLE}
-
-${buildDesktopSignature(fields)}
-
-${buildMobileSignature(fields)}`;
+  return `<table cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100%; max-width: ${SIGNATURE_MAX_WIDTH}px; border-collapse: collapse; font-family: ${FONT_FAMILY}; color: #333333;">
+  <tbody>
+    <tr>
+      <td style="border-left: 6px solid #d94a52; padding: 8px 12px 10px 20px; font-family: ${FONT_FAMILY}; font-size: 13px; line-height: 1.5; color: #333333;">
+        ${buildLogo()}
+        ${buildIdentity(fields)}
+        ${buildContacts(fields)}
+        ${buildAddresses()}
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
 }
 
+// 다우오피스는 서명을 display: table/table-cell 래퍼로 감싸 발송하므로 미리보기도 같은 조건에서 렌더링한다.
+const DAOU_SIGNATURE_WRAPPER_START =
+  '<div style="display: table;"><div style="display: table-row;"><div style="display: table-cell; vertical-align: top;">';
+const DAOU_SIGNATURE_WRAPPER_END = '</div></div></div>';
+
 export function buildPreviewDocument(signatureHtml: string): string {
-  return `<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#fff;overflow:hidden}body{padding:16px}</style></head><body>${signatureHtml}</body></html>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#fff;overflow:hidden}body{padding:16px}</style></head><body>${DAOU_SIGNATURE_WRAPPER_START}${signatureHtml}${DAOU_SIGNATURE_WRAPPER_END}</body></html>`;
 }
