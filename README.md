@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <img src="public/datamatica_Logo.png" alt="DataMatica" width="80" />
+</p>
 
-## Getting Started
+<h1 align="center">DataMatica 메일 서명 생성기</h1>
 
-First, run the development server:
+<p align="center">
+  임직원 정보를 입력하면 회사 표준 메일 서명 HTML을 만들어 주는 웹 도구입니다.<br />
+  다우오피스 메일 서명(HTML 편집 모드)에 바로 붙여넣어 사용할 수 있습니다.
+</p>
+
+## 주요 기능
+
+- **정보 입력과 검증**: 한글/영문 이름, 부서(목록 선택 또는 직접 입력), 직급, 휴대폰 번호, 이메일 아이디를 입력하면 형식을 검사합니다.
+- **휴대폰 번호 자동 표기**: `010-1234-5678`처럼 입력하면 서명에는 `+82 (0)10-1234-5678` 형식으로 들어갑니다.
+- **실시간 미리보기**: 입력할 때마다 데스크탑(860px)과 모바일(375px) 서명을 바로 보여줍니다. 데스크탑 미리보기를 누르면 원본 크기로 확인할 수 있습니다.
+- **서명 HTML 생성**: 생성된 코드를 복사하거나 `.html` 파일로 내려받을 수 있습니다. 생성한 뒤 입력값을 바꾸면 다시 생성하라고 알려줍니다.
+- **반응형 서명**: 하나의 HTML 안에 데스크탑용 서명과 모바일용 서명이 함께 들어 있고, 메일 클라이언트의 화면 폭에 따라 하나만 표시됩니다.
+
+웹사이트 주소, 본사/연구소 주소, 전북 사업장 주소, 로고는 고정값이라 사용자가 수정할 수 없습니다.
+
+## 사용 방법
+
+1. 페이지에서 내 정보를 입력하고 **서명 HTML 생성** 버튼을 누릅니다.
+2. **HTML 복사** 버튼으로 코드를 복사합니다.
+3. 다우오피스 메일 → 환경설정 → 서명에서 편집 방식을 **HTML**로 바꿉니다.
+4. 기존 내용을 모두 지우고 붙여넣은 뒤 저장합니다.
+
+## 기술 스택
+
+| 구분 | 사용 기술 |
+| --- | --- |
+| 프레임워크 | Next.js 16 (App Router), React 19 |
+| 언어 | TypeScript (strict) |
+| 스타일 | Tailwind CSS 4, clsx, Pretendard (CDN) |
+| 테스트 | Vitest |
+| 코드 품질 | ESLint, Prettier (prettier-plugin-tailwindcss) |
+
+## 시작하기
+
+### 요구 사항
+
+- Node.js 20.19 이상 (Next.js만 실행하려면 20.9 이상이면 충분하지만, 테스트 도구 일부가 20.19 이상을 요구합니다.)
+- npm
+
+### 설치 및 실행
 
 ```bash
+git clone https://github.com/Datamatica-project/dm_signature.git
+cd dm_signature
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+브라우저에서 [http://localhost:3000](http://localhost:3000)을 열면 됩니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 스크립트
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| 명령 | 설명 |
+| --- | --- |
+| `npm run dev` | 개발 서버 실행 |
+| `npm run build` | 프로덕션 빌드 |
+| `npm run start` | 빌드 결과 실행 |
+| `npm run lint` | ESLint 검사 |
+| `npm run type-check` | TypeScript 타입 검사 |
+| `npm test` | 단위 테스트 1회 실행 |
+| `npm run test:watch` | 테스트 watch 모드 |
 
-## Learn More
+## 프로젝트 구조
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+├─ layout.tsx                  # 루트 레이아웃, 기본 Metadata, Pretendard
+├─ globals.css                 # Tailwind 테마 토큰 (색상, 폰트)
+├─ page.tsx                    # 서명 생성기 페이지 (Server Component)
+└─ _signature-generator/       # 서명 생성기 기능 전용 코드
+   ├─ components/              # 폼, 미리보기, 원본 크기 모달, 생성 코드 패널
+   ├─ hooks/                   # 요소 크기 측정, iframe 콘텐츠 높이 측정
+   ├─ lib/                     # 서명 HTML 생성, 입력 정규화, 검증 등 순수 로직과 테스트
+   ├─ constants.ts             # 부서 목록, 회사 정보, 샘플 값
+   └─ types.ts
+public/
+└─ datamatica_Logo.png         # 페이지 헤더 로고
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 서명 내용 수정하기
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **부서 목록, 주소, 웹사이트, 서명 로고 URL**: `app/_signature-generator/constants.ts`
+- **서명 HTML 레이아웃**: `app/_signature-generator/lib/desktop-signature.ts`, `mobile-signature.ts`
+- **입력 검증 규칙**: `app/_signature-generator/lib/validation.ts`
 
-## Deploy on Vercel
+서명 HTML은 메일 클라이언트 호환성을 위해 `table` 레이아웃과 inline style로 작성되어 있습니다. 서명에 들어가는 로고 이미지는 `https://www.datamatica.kr`에 올라가 있는 파일을 참조합니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 개발 규칙
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+코드 작성 규칙(주석, 스타일, 컴포넌트 분리, 접근성, 테스트, 커밋 등)은 [`CLAUDE.md`](./CLAUDE.md)를 따릅니다.
