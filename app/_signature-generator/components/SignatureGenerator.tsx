@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useElementSize } from '../hooks/useElementSize';
+import { COMPANY } from '../constants';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { generateSignature, toInputKey } from '../lib/generate-signature';
 import { normalizeSignatureInput, toSignatureValues } from '../lib/signature-input';
@@ -41,7 +42,9 @@ export function SignatureGenerator() {
       })
     : {};
   const inputKey = toInputKey(input);
-  const previewDocument = buildPreviewDocument(buildSignatureHtml(toSignatureValues(input, true)));
+  const previewDocument = buildPreviewDocument(
+    buildSignatureHtml(toSignatureValues(input, true), COMPANY.bundledLogoPath)
+  );
 
   useEffect(() => {
     if (!generated) return;

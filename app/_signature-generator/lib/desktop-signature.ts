@@ -8,27 +8,23 @@ const ADDRESS_LABEL_STYLE =
 const ADDRESS_VALUE_STYLE =
   'padding: 1px 0; font-size: 13px; line-height: 1.45; font-weight: 400; color: #777777; white-space: nowrap;';
 
-export function buildDesktopSignature({
-  ko,
-  en,
-  position,
-  phoneDisplay,
-  email,
-}: EscapedSignatureFields): string {
+export function buildDesktopSignature(
+  { ko, en, position, phoneDisplay, email }: EscapedSignatureFields,
+  logoSrc: string
+): string {
   const { headOffice, jeonbukOffice } = COMPANY;
 
-  return `<!-- DESKTOP SIGNATURE -->
-<table class="dm-signature-desktop" cellpadding="0" cellspacing="0" border="0" style="font-family: ${FONT_FAMILY}; color: #333333; border-collapse: collapse;">
+  return `<table cellpadding="0" cellspacing="0" border="0" style="font-family: ${FONT_FAMILY}; color: #333333; border-collapse: collapse;">
   <tbody>
     <tr>
       <td width="170" valign="middle" style="width: 170px; padding: 8px; vertical-align: middle; text-align: center; border-left: 7px solid #d94a52; border-right: 1px solid #b61717;">
-        <img src="${COMPANY.desktopLogoUrl}" width="120" alt="DataMatica" style="display: block; width: 120px; height: 144px; margin: 0 auto; padding: 0; border: 0;" />
+        <img src="${logoSrc}" width="120" height="144" alt="DataMatica" style="display: block; width: 120px; height: 144px; margin: 0 auto; padding: 0; border: 0;" />
       </td>
       <td valign="middle" style="padding: 8px 10px 8px 24px; vertical-align: middle">
-        <div style="margin: 0; padding: 0; font-family: ${FONT_FAMILY}; font-size: 19px; line-height: 1.25; font-weight: 700; letter-spacing: -0.2px; color: #171717; white-space: nowrap;">
-          ${ko}<span style="display: inline-block; margin: 0 6px; color: #aaaaaa; font-weight: 400; font-family: ${FONT_FAMILY}; font-size: 14pt;">|</span>${en}
+        <div style="margin: 0; padding: 0; font-family: ${FONT_FAMILY}; font-size: 20px; line-height: 1.25; font-weight: 700; letter-spacing: -0.2px; color: #171717; white-space: nowrap;">
+          ${ko}<span style="display: inline-block; margin: 0 6px; color: #aaaaaa; font-weight: 400; font-family: ${FONT_FAMILY}; font-size: 14pt;">|</span><span style="font-weight: 350; color: #737373;">${en}</span>
         </div>
-        <div style="margin: 3px 0 10px 0; padding: 0; font-family: ${FONT_FAMILY}; font-size: 16px; line-height: 1.4; font-weight: 400; color: #777777; white-space: nowrap;">${position}</div>
+        <div style="margin: 8px 0 10px 0; padding: 0; font-family: ${FONT_FAMILY}; font-size: 14px; line-height: 1.4; font-weight: 400; color: #777777; white-space: nowrap;">${position}</div>
         <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; font-family: ${FONT_FAMILY};">
           <tbody>
             <tr><td width="42" style="${LABEL_STYLE}">M.</td><td style="padding: 1px 0; font-size: 13px; line-height: 1.4; font-weight: 400; color: #2d2d2d; white-space: nowrap;">${phoneDisplay}</td></tr>

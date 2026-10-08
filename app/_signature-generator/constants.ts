@@ -13,8 +13,9 @@ export const EMAIL_DOMAIN = 'datamatica.kr';
 export const COMPANY = {
   website: 'https://www.datamatica.kr',
   websiteLabel: 'www.datamatica.kr',
-  desktopLogoUrl: 'https://www.datamatica.kr/signature-logo.png',
-  mobileLogoUrl: 'https://www.datamatica.kr/signature-logo_horizontal.png',
+  // 메일 수신자가 열어 보는 HTML 서명은 외부에서 접근 가능한 절대 URL이 필요하다.
+  logoUrl: 'https://www.datamatica.kr/signature-logo.png',
+  bundledLogoPath: '/signature-logo.png',
   headOffice: {
     label: '본사/연구소',
     lines: ['경기 성남시 분당구 판교로255번길 9-22', '우림 W-City 809-1호'],
@@ -31,9 +32,7 @@ export const SAMPLE_SIGNATURE = {
   department: '솔루션개발본부',
   title: '연구원',
   phoneDisplay: '+82 (0)10-0000-0000',
-  phoneTel: '+821000000000',
   email: `gildong@${EMAIL_DOMAIN}`,
 } as const;
 
 export const DESKTOP_SIGNATURE_WIDTH = 860;
-export const MOBILE_SIGNATURE_WIDTH = 375;

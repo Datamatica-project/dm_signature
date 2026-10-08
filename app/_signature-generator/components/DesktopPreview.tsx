@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import type { RefObject } from 'react';
 
 interface DesktopPreviewProps {
@@ -7,7 +6,6 @@ interface DesktopPreviewProps {
   iframeRef: RefObject<HTMLIFrameElement | null>;
   contentHeight: number;
   scale: number;
-  hidden: boolean;
   onIframeLoad: () => void;
   onOpenOriginal: () => void;
 }
@@ -18,12 +16,11 @@ export function DesktopPreview({
   iframeRef,
   contentHeight,
   scale,
-  hidden,
   onIframeLoad,
   onOpenOriginal,
 }: DesktopPreviewProps) {
   return (
-    <div className={clsx('flex-col gap-2', hidden ? 'hidden' : 'flex')}>
+    <div className="flex flex-col gap-2">
       <div
         ref={boxRef}
         className="border-line-dashed relative w-full overflow-hidden rounded-md border border-dashed"
@@ -31,7 +28,7 @@ export function DesktopPreview({
       >
         <iframe
           ref={iframeRef}
-          title="데스크탑 서명 미리보기"
+          title="서명 미리보기"
           srcDoc={previewDocument}
           onLoad={onIframeLoad}
           className="block w-[860px] origin-top-left border-0"

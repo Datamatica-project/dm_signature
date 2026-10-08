@@ -17,12 +17,14 @@ describe('generateSignature', () => {
     const result = generateSignature(VALID_FORM);
     if (result.status !== 'success') throw new Error('유효한 입력이 거부되었습니다.');
 
-    const { html, summary, fileName } = result.signature;
+    const { html, imageHtml, summary, fileName, imageFileName } = result.signature;
     expect(summary).toBe('홍길동 · 솔루션개발본부 / 연구원');
     expect(fileName).toBe('메일서명_홍길동.html');
-    expect(html).toContain('<!-- DESKTOP SIGNATURE -->');
-    expect(html).toContain('<!-- MOBILE SIGNATURE -->');
-    expect(html).toContain('href="tel:+821012345678"');
+    expect(imageFileName).toBe('메일서명_홍길동.png');
+    expect(html).not.toContain('<style');
+    expect(html).not.toContain('@media');
+    expect(html).toContain('src="https://www.datamatica.kr/signature-logo.png"');
+    expect(imageHtml).toContain('src="/signature-logo.png"');
     expect(html).toContain('href="mailto:gildong@datamatica.kr"');
     expect(html).toContain('+82 (0)10-1234-5678');
   });

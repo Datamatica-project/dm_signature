@@ -14,6 +14,5 @@ export function formatPhone(raw: string): FormattedPhone | null {
 
   return {
     display: `+82 (0)${carrier}-${middle}-${last}`,
-    tel: `+82${withoutTrunkPrefix}`,
   };
 }

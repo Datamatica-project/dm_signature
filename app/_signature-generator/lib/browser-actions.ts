@@ -13,8 +13,28 @@ export async function copyText(text: string): Promise<void> {
   textarea.remove();
 }
 
+export async function fetchAsDataUrl(url: string): Promise<string> {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`파일을 불러오지 못했습니다: ${url}`);
+  const blob = await response.blob();
+
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () =>
+      typeof reader.result === 'string'
+        ? resolve(reader.result)
+        : reject(new Error('파일을 data URL로 변환하지 못했습니다.'));
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
 export function downloadHtmlFile(html: string, fileName: string): void {
-  const url = URL.createObjectURL(new Blob([html], { type: 'text/html;charset=utf-8' }));
+  downloadBlob(new Blob([html], { type: 'text/html;charset=utf-8' }), fileName);
+}
+
+export function downloadBlob(blob: Blob, fileName: string): void {
+  const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;
   anchor.download = fileName;

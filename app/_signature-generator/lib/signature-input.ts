@@ -31,7 +31,6 @@ export function toSignatureValues(
     department: orSample(input.department, SAMPLE_SIGNATURE.department),
     title: orSample(input.title, SAMPLE_SIGNATURE.title),
     phoneDisplay: input.phone?.display ?? SAMPLE_SIGNATURE.phoneDisplay,
-    phoneTel: input.phone?.tel ?? SAMPLE_SIGNATURE.phoneTel,
     email: input.emailId ? `${input.emailId}@${EMAIL_DOMAIN}` : SAMPLE_SIGNATURE.email,
   };
 }

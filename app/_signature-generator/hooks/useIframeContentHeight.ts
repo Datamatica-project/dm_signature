@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
-export function useIframeContentHeight(initialHeight: number, isVisible: boolean) {
+export function useIframeContentHeight(initialHeight: number) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [height, setHeight] = useState(initialHeight);
 
@@ -11,10 +11,11 @@ export function useIframeContentHeight(initialHeight: number, isVisible: boolean
     if (contentHeight) setHeight(contentHeight);
   }, []);
 
-  // 숨겨진 iframe은 높이가 0으로 측정되므로 화면에 다시 보일 때 측정한다.
-  useEffect(() => {
-    if (isVisible) measure();
-  }, [isVisible, measure]);
+  const handleLoad = useCallback(() => {
+    measure();
+    // 웹 폰트는 iframe load 이후에 적용될 수 있어 폰트 로딩이 끝나면 높이를 다시 잰다.
+    void iframeRef.current?.contentDocument?.fonts.ready.then(measure);
+  }, [measure]);
 
-  return { iframeRef, height, handleLoad: measure };
+  return { iframeRef, height, handleLoad };
 }

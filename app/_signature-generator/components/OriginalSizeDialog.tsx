@@ -37,7 +37,7 @@ export function OriginalSizeDialog({
     >
       <div className="flex items-center justify-between gap-4 border-b border-[#eeebe7] py-3.5 pr-4 pl-5">
         <h2 id="original-size-title" className="text-[15px] font-bold">
-          데스크탑 서명 · 원본 크기
+          서명 · 원본 크기
         </h2>
         <button
           type="button"
@@ -51,7 +51,7 @@ export function OriginalSizeDialog({
       <div className="overflow-auto">
         {open && (
           <iframe
-            title="데스크탑 서명 원본 크기"
+            title="서명 원본 크기"
             srcDoc={previewDocument}
             className="block w-[860px] border-0"
             style={{ height: contentHeight }}

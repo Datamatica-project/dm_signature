@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { copyText, downloadHtmlFile } from '../lib/browser-actions';
 import type { GeneratedSignature } from '../types';
+import { ImageDownloadButton } from './ImageDownloadButton';
 
 interface GeneratedCodePanelProps {
   panelRef: RefObject<HTMLElement | null>;
@@ -42,7 +43,7 @@ export function GeneratedCodePanel({
           </h2>
           <span className="text-muted text-[13px]">{signature.summary}</span>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => downloadHtmlFile(signature.html, signature.fileName)}
@@ -54,10 +55,14 @@ export function GeneratedCodePanel({
             type="button"
             onClick={handleCopy}
             aria-live="polite"
-            className="bg-ink focus-visible:outline-brand h-10 min-w-[120px] cursor-pointer rounded-md px-[18px] text-sm font-semibold text-white hover:bg-black focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="border-line-strong text-ink hover:bg-canvas focus-visible:outline-brand h-10 min-w-[120px] cursor-pointer rounded-md border bg-white px-4 text-sm font-semibold focus-visible:outline-2"
           >
             {isCopied ? '복사됨 ✓' : 'HTML 복사'}
           </button>
+          <ImageDownloadButton
+            signatureHtml={signature.imageHtml}
+            fileName={signature.imageFileName}
+          />
         </div>
       </div>
 
@@ -85,16 +90,6 @@ export function GeneratedCodePanel({
         aria-label="생성된 서명 HTML 코드"
         className="text-ink-soft bg-surface-code border-line focus:border-brand h-80 w-full resize-y rounded-md border p-4 font-mono text-xs leading-[1.55] outline-none"
       />
-
-      <ol className="text-ink-soft flex list-decimal flex-col gap-1.5 pl-5 text-sm leading-normal">
-        <li>
-          위 <b>복사</b> 버튼으로 코드를 복사합니다.
-        </li>
-        <li>
-          다우오피스 메일 → 환경설정 → 서명에서 편집 방식을 <b>HTML</b>로 바꿉니다.
-        </li>
-        <li>기존 내용을 모두 지우고 붙여넣은 뒤 저장합니다.</li>
-      </ol>
     </section>
   );
 }

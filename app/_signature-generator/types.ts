@@ -4,8 +4,6 @@ export type Department = (typeof DEPARTMENTS)[number];
 
 export type DepartmentSelection = '' | Department | typeof CUSTOM_DEPARTMENT;
 
-export type PreviewTab = 'desktop' | 'mobile';
-
 export interface SignatureFormState {
   ko: string;
   en: string;
@@ -22,7 +20,6 @@ export type ValidationErrors = Partial<Record<FieldName, string>>;
 
 export interface FormattedPhone {
   display: string;
-  tel: string;
 }
 
 export interface NormalizedSignatureInput {
@@ -40,13 +37,14 @@ export interface SignatureValues {
   department: string;
   title: string;
   phoneDisplay: string;
-  phoneTel: string;
   email: string;
 }
 
 export interface GeneratedSignature {
   html: string;
+  imageHtml: string;
   inputKey: string;
   summary: string;
   fileName: string;
+  imageFileName: string;
 }

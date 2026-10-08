@@ -20,7 +20,6 @@ describe('toSignatureValues', () => {
       department: SAMPLE_SIGNATURE.department,
       title: SAMPLE_SIGNATURE.title,
       phoneDisplay: SAMPLE_SIGNATURE.phoneDisplay,
-      phoneTel: SAMPLE_SIGNATURE.phoneTel,
       email: SAMPLE_SIGNATURE.email,
     });
   });
@@ -30,7 +29,7 @@ describe('toSignatureValues', () => {
       {
         ...EMPTY_INPUT,
         ko: '김철수',
-        phone: { display: '+82 (0)10-1111-2222', tel: '+821011112222' },
+        phone: { display: '+82 (0)10-1111-2222' },
         emailId: 'chulsoo',
       },
       true
@@ -38,7 +37,7 @@ describe('toSignatureValues', () => {
 
     expect(values.ko).toBe('김철수');
     expect(values.en).toBe(SAMPLE_SIGNATURE.en);
-    expect(values.phoneTel).toBe('+821011112222');
+    expect(values.phoneDisplay).toBe('+82 (0)10-1111-2222');
     expect(values.email).toBe('chulsoo@datamatica.kr');
   });
 
